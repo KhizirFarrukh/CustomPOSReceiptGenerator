@@ -1,4 +1,5 @@
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -222,6 +223,13 @@ public class ProgramGUI extends javax.swing.JFrame {
         jLabel10.setText("Tax (%)");
         jLabel10.setToolTipText("");
 
+        ReceiptTaxInput.setText("0");
+        ReceiptTaxInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReceiptTaxInputActionPerformed(evt);
+            }
+        });
+
         ReceiptTotalAmtField.setEditable(false);
 
         ReceiptSubTotalField.setEditable(false);
@@ -314,11 +322,7 @@ public class ProgramGUI extends javax.swing.JFrame {
 
         CartItemListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(1), "All American Double Cheese Burger",  new Integer(800),  new Integer(2),  new Integer(1600)},
-                { new Integer(2), "Firehouse (w. extra cheese)",  new Integer(550),  new Integer(1),  new Integer(550)},
-                { new Integer(3), "Loaded Fries",  new Integer(450),  new Integer(3),  new Integer(1350)},
-                { new Integer(4), "Blue Colada",  new Integer(400),  new Integer(1),  new Integer(400)},
-                { new Integer(5), "Soft Drink Can (250ml)",  new Integer(80),  new Integer(5),  new Integer(400)}
+
             },
             new String [] {
                 "S. No", "Name", "Price", "Qty", "Total"
@@ -442,23 +446,40 @@ public class ProgramGUI extends javax.swing.JFrame {
             generateMessageDialog("Minimum item quantity is 1");
         } else {
             int ItemPrice = Integer.parseInt(ItemPriceStr);
-            int NewSno = ((Integer)CartItemListTable.getValueAt(CartItemListTable.getRowCount()-1, 0)) + 1;
+            int NewSno = 1;
+            if(CartItemListTable.getRowCount() > 0) {
+                NewSno = ((Integer)CartItemListTable.getValueAt(CartItemListTable.getRowCount()-1, 0)) + 1;
+            }
             DefaultTableModel model = (DefaultTableModel) CartItemListTable.getModel();
             model.addRow(new Object[]{NewSno, ItemName, ItemPrice, ItemQty, ItemPrice * ItemQty});
             ItemNameInput.setText("");
             ItemPriceInput.setText("");
             ItemQtyField.setText("0");
+            int subTotal = getSubTotalFromCart();
+            String TaxStr = ReceiptTaxInput.getText();
+            int Tax = 0;
+            if(checkOnlyDecimal(TaxStr)) {
+                Tax = Integer.parseInt(TaxStr);
+            } else {
+                generateMessageDialog("Tax can only be numeric/decimal number");
+                ReceiptTaxInput.setText("0");
+            }
+            int TotalAmount = (int)(subTotal + (subTotal * ((float)Tax/100)));
+            ReceiptSubTotalField.setText(String.valueOf(subTotal));
+            ReceiptTotalAmtField.setText(String.valueOf(TotalAmount));
         }
-//            Object[][] rowData = new Object[CartItemListTable.getRowCount()][CartItemListTable.getColumnCount()];
-//            for (int i = 0; i < CartItemListTable.getRowCount(); i++) {
-//                for (int j = 0; j < CartItemListTable.getColumnCount(); j++) {
-//                    rowData[i][j] = CartItemListTable.getValueAt(i, j);
-//                    System.out.print(rowData[i][j] + " ");
-//                }
-//                System.out.println();
-//            }
     }//GEN-LAST:event_AddItemButtonActionPerformed
-
+    
+    private int getSubTotalFromCart() {
+        int subTotal = 0;
+        Object[] rowData = new Object[CartItemListTable.getRowCount()];
+        for (int i = 0; i < CartItemListTable.getRowCount(); i++) {
+            rowData[i] = CartItemListTable.getValueAt(i, 4);
+            subTotal += (Integer)rowData[i];
+        }
+        return subTotal;
+    }
+    
     private void ItemQtyIncButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemQtyIncButtonActionPerformed
         int ItemQty = Integer.parseInt(ItemQtyField.getText());
         ItemQty += 1;
@@ -472,6 +493,21 @@ public class ProgramGUI extends javax.swing.JFrame {
             ItemQtyField.setText(String.valueOf(ItemQty));
         }
     }//GEN-LAST:event_ItemQtyDecButtonActionPerformed
+
+    private void ReceiptTaxInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReceiptTaxInputActionPerformed
+        int subTotal = getSubTotalFromCart();
+        String TaxStr = ReceiptTaxInput.getText();
+        int Tax = 0;
+        if(checkOnlyDecimal(TaxStr)) {
+            Tax = Integer.parseInt(TaxStr);
+        } else {
+            generateMessageDialog("Tax can only be numeric/decimal number");
+            ReceiptTaxInput.setText("0");
+        }
+        int TotalAmount = (int)(subTotal + (subTotal * ((float)Tax/100)));
+        ReceiptSubTotalField.setText(String.valueOf(subTotal));
+        ReceiptTotalAmtField.setText(String.valueOf(TotalAmount));
+    }//GEN-LAST:event_ReceiptTaxInputActionPerformed
 
     /**
      * @param args the command line arguments
