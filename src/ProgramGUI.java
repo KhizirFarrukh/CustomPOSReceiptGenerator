@@ -69,6 +69,7 @@ public class ProgramGUI extends javax.swing.JFrame {
         GenReceiptButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         CartItemListTable = new javax.swing.JTable();
+        SaveDataCheckbox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -231,8 +232,10 @@ public class ProgramGUI extends javax.swing.JFrame {
         });
 
         ReceiptTotalAmtField.setEditable(false);
+        ReceiptTotalAmtField.setText("0");
 
         ReceiptSubTotalField.setEditable(false);
+        ReceiptSubTotalField.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -244,16 +247,16 @@ public class ProgramGUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
-                        .addComponent(ReceiptTotalAmtField, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                        .addComponent(ReceiptTotalAmtField, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel14))
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ReceiptSubTotalField, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                            .addComponent(ReceiptTaxInput))))
-                .addContainerGap(94, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ReceiptTaxInput, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(ReceiptSubTotalField, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +322,11 @@ public class ProgramGUI extends javax.swing.JFrame {
         jLabel11.setText("Receipt Info");
 
         GenReceiptButton.setText("Generate Receipt");
+        GenReceiptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GenReceiptButtonActionPerformed(evt);
+            }
+        });
 
         CartItemListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -358,6 +366,8 @@ public class ProgramGUI extends javax.swing.JFrame {
             CartItemListTable.getColumnModel().getColumn(4).setPreferredWidth(60);
         }
 
+        SaveDataCheckbox.setText("Save data");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -379,46 +389,46 @@ public class ProgramGUI extends javax.swing.JFrame {
                     .addComponent(AddItemButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(GenReceiptButton)
-                        .addGap(78, 78, 78))))
+                        .addGap(102, 102, 102)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SaveDataCheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(GenReceiptButton))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(TitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(AddItemButton)
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(GenReceiptButton)
-                        .addGap(97, 97, 97))))
+                        .addComponent(AddItemButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(SaveDataCheckbox)
+                        .addGap(18, 18, 18)
+                        .addComponent(GenReceiptButton)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -509,6 +519,39 @@ public class ProgramGUI extends javax.swing.JFrame {
         ReceiptTotalAmtField.setText(String.valueOf(TotalAmount));
     }//GEN-LAST:event_ReceiptTaxInputActionPerformed
 
+    private void GenReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenReceiptButtonActionPerformed
+        if(CartItemListTable.getRowCount() == 0) {
+            generateMessageDialog("Enter an item first");
+        } else {
+            String CompanyName = CompanyNameInput.getText();
+            String CompanyAddress = CompanyAddrInput.getText();
+            String CompanyPhoneNum = CompanyPhoneInput.getText();
+            String CompanyEmailAddr = CompanyEmailInput.getText();
+            String CashierName = CashierNameInput.getText();
+            String ReceiptNo = ReceiptNoInput.getText();
+            String Tax = ReceiptTaxInput.getText();
+
+
+            //Print Receipt
+
+            if(SaveDataCheckbox.isSelected()) {
+                //write data to file in organized manner
+            } else {
+                CompanyNameInput.setText("");
+                CompanyAddrInput.setText("");
+                CompanyPhoneInput.setText("");
+                CompanyEmailInput.setText("");
+                CashierNameInput.setText("");
+                ReceiptNoInput.setText("");
+                ReceiptTaxInput.setText("0");
+            }
+            ReceiptSubTotalField.setText("0");
+            ReceiptTotalAmtField.setText("0");
+            DefaultTableModel model = (DefaultTableModel) CartItemListTable.getModel();
+            model.setRowCount(0);
+        }
+    }//GEN-LAST:event_GenReceiptButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -543,6 +586,9 @@ public class ProgramGUI extends javax.swing.JFrame {
             }
         });
     }
+    void WriteDataToFile() {
+        
+    }
     void generateMessageDialog(String str) {
         JOptionPane.showMessageDialog(null, str);
     }
@@ -576,6 +622,7 @@ public class ProgramGUI extends javax.swing.JFrame {
     private javax.swing.JTextField ReceiptSubTotalField;
     private javax.swing.JTextField ReceiptTaxInput;
     private javax.swing.JTextField ReceiptTotalAmtField;
+    private javax.swing.JCheckBox SaveDataCheckbox;
     private javax.swing.JLabel TitleLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
