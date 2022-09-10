@@ -1,5 +1,8 @@
 
+import TokenGenerator.PrinterService;
 import java.awt.event.KeyEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +17,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Khizir Farrukh
  */
 public class ProgramGUI extends javax.swing.JFrame {
-
+    PrinterService printerService;
     /**
      * Creates new form ProgramGUI
      */
     public ProgramGUI() {
         initComponents();
+        printerService = new PrinterService();
     }
 
     /**
@@ -522,17 +526,10 @@ public class ProgramGUI extends javax.swing.JFrame {
     private void GenReceiptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenReceiptButtonActionPerformed
         if(CartItemListTable.getRowCount() == 0) {
             generateMessageDialog("Enter an item first");
-        } else {
-            String CompanyName = CompanyNameInput.getText();
-            String CompanyAddress = CompanyAddrInput.getText();
-            String CompanyPhoneNum = CompanyPhoneInput.getText();
-            String CompanyEmailAddr = CompanyEmailInput.getText();
-            String CashierName = CashierNameInput.getText();
-            String ReceiptNo = ReceiptNoInput.getText();
-            String Tax = ReceiptTaxInput.getText();
-
-
-            //Print Receipt
+        } else if(checkIfEmpty(CompanyNameInput.getText())) {
+            generateMessageDialog("Please provide company name");
+        } else { 
+            PrintToken();
 
             if(SaveDataCheckbox.isSelected()) {
                 //write data to file in organized manner
@@ -585,6 +582,53 @@ public class ProgramGUI extends javax.swing.JFrame {
                 new ProgramGUI().setVisible(true);
             }
         });
+    }
+    private String GetSystemTime()
+    {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("hh:mm a, dd/MM/yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        String TimeDateString = dtf.format(now);
+        return TimeDateString;
+    }
+    private void PrintToken()
+    {
+        String TimeDateString = GetSystemTime();
+        
+        byte[] justify1 = new byte[] { 0x1b, 0x61, 49};
+        byte[] fSize1 = new byte[] { 0x1d, '!', 0 };
+        byte[] fSize2 = new byte[]{ 0x1d, '!', 17 };
+        byte[] fSize3 = new byte[] { 0x1d, '!', 35 };
+        byte[] fSize4 = new byte[] { 0x1d, '!', 51 };
+        
+        byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+        
+        String justify1Str = new String(justify1);
+        String fSize1Str = new String(fSize1);
+        String fSize2Str = new String(fSize2);
+        String fSize3Str = new String(fSize3);
+        String fSize4Str = new String(fSize4);
+        String cutPStr = new String(cutP);
+        
+        String CompanyName = CompanyNameInput.getText();
+        String CompanyAddress = CompanyAddrInput.getText();
+        String CompanyPhoneNum = CompanyPhoneInput.getText();
+        String CompanyEmailAddr = CompanyEmailInput.getText();
+        String CashierName = CashierNameInput.getText();
+        String ReceiptNo = ReceiptNoInput.getText();
+        String Tax = ReceiptTaxInput.getText();
+        
+//        String TimeDate_PTypeToken = "\n" + TimeDateString + "\n" + "________________________\n\n" + PatientType + " TOKEN NUMBER\n";
+        String HorizontalLine = "________________________\n\n";
+        String Footer = "\n\n\n\n\n\nSOFTWARE DEVELOPED BY KHIZIR FARRUKH\nEMAIL: khizirfarrukh@outlook.com\n\n\n\n\n";
+        String FullString = justify1Str + fSize3Str + CompanyName + "\n" + fSize2Str; // +  + TimeDateString + HorizontalLine + fSize4Str + TokenNumber + fSize5Str + Footer + cutPStr;
+        if(!checkIfEmpty(CompanyAddress)) { FullString += CompanyAddress + "\n"; }
+        if(!checkIfEmpty(CompanyPhoneNum)) { FullString += CompanyPhoneNum + "\n"; }
+        if(!checkIfEmpty(CompanyEmailAddr)) { FullString += CompanyEmailAddr + "\n"; }
+        if(!checkIfEmpty(CashierName)) { FullString += "Cashier: " + CashierName + "\n"; }
+        FullString += fSize1Str + TimeDateString + "\n" + HorizontalLine;
+        
+        
+        printerService.printString("BCPrinter", FullString);
     }
     void WriteDataToFile() {
         
