@@ -640,11 +640,20 @@ public class ProgramGUI extends javax.swing.JFrame {
             sno += "|";
             
             temp = ItemName.length();
-            String ItemNameStringBreak = "";
-            if(temp > itemName_MaxLen) {
-                ItemNameStringBreak = ItemName.substring(23);
-                ItemName = ItemName.substring(0,23);
+            int StringBreakLines = temp / 23;
+            String[] ItemNameStringBreak = new String[StringBreakLines];
+            for (int x = 23, y = 0; x < temp; x+=23, y++) {
+                int EndIndex = 23;
+                if(temp - x < 23) {
+                    EndIndex = temp - x;
+                }
+                ItemNameStringBreak[y] = ItemName.substring(x, x+EndIndex);
             }
+            int EndIndex = 23;
+            if(temp < 23) {
+                EndIndex = temp;
+            }
+            ItemName = ItemName.substring(0,EndIndex);
             temp = ItemName.length();
             for (int j = 0; j < itemName_MaxLen - temp; j++) {
                 ItemName+=" ";
@@ -669,14 +678,21 @@ public class ProgramGUI extends javax.swing.JFrame {
             }
             ItemTotalPrice += "|";
             
-            temp = ItemNameStringBreak.length();
-            for (int j = 0; j < itemName_MaxLen - temp; j++) {
-                ItemNameStringBreak+=" ";
+            for (int y = 0; y < StringBreakLines; y++) {
+                temp = ItemNameStringBreak[y].length();
+                for (int j = 0; j < itemName_MaxLen - temp; j++) {
+                    ItemNameStringBreak[y]+=" ";
+                }
+                ItemNameStringBreak[y] = "    |" + ItemNameStringBreak[y] + "|      |    |      |";
             }
-            ItemNameStringBreak += "|";
+            
             
             rowData[i] = sno + ItemName + ItemPrice + ItemQty + ItemTotalPrice;
-            System.out.println(rowData[i] + "\n" + "    |" + ItemNameStringBreak + "      |    |      |");
+            for (int y = 0;y < StringBreakLines; y++) {
+                rowData[i] += "\n" + ItemNameStringBreak[y];
+//                System.out.println(ItemNameStringBreak[y]);
+            }
+            System.out.println(rowData[i]);
         }
         /*
             Size 1 characters per line limit: 48.
