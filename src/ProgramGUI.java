@@ -616,7 +616,84 @@ public class ProgramGUI extends javax.swing.JFrame {
         String CashierName = CashierNameInput.getText();
         String ReceiptNo = ReceiptNoInput.getText();
         String Tax = ReceiptTaxInput.getText();
+        String SubTotal = ReceiptSubTotalField.getText();
+        String TotalAmount = ReceiptTotalAmtField.getText();
         
+        String[] rowData = new String[CartItemListTable.getRowCount()];
+        for (int i = 0; i < CartItemListTable.getRowCount(); i++) {
+            String sno = String.valueOf((Integer)CartItemListTable.getValueAt(i, 0));
+            String ItemName = (String)CartItemListTable.getValueAt(i, 1);
+            String ItemPrice = String.valueOf((Integer)CartItemListTable.getValueAt(i, 2));
+            String ItemQty = String.valueOf((Integer)CartItemListTable.getValueAt(i, 3));
+            String ItemTotalPrice = String.valueOf((Integer)CartItemListTable.getValueAt(i, 4));
+            
+            int sno_MaxLen = 4;
+            int itemName_MaxLen = 24;
+            int itemPrice_MaxLen = 6;
+            int itemQty_MaxLen = 4;
+            int itemTotalPrice_MaxLen = 6;
+            
+            int temp = sno.length();
+            for (int j = 0; j < sno_MaxLen - temp; j++) {
+                sno+=" ";
+            }
+            sno += "|";
+            
+            temp = ItemName.length();
+            String ItemNameStringBreak = "";
+            if(temp > itemName_MaxLen) {
+                ItemNameStringBreak = ItemName.substring(23);
+                ItemName = ItemName.substring(0,23);
+            }
+            temp = ItemName.length();
+            for (int j = 0; j < itemName_MaxLen - temp; j++) {
+                ItemName+=" ";
+            }
+            ItemName += "|";
+            
+            temp = ItemPrice.length();
+            for (int j = 0; j < itemPrice_MaxLen - temp; j++) {
+                ItemPrice+=" ";
+            }
+            ItemPrice += "|";
+            
+            temp = ItemQty.length();
+            for (int j = 0; j < itemQty_MaxLen - temp; j++) {
+                ItemQty+=" ";
+            }
+            ItemQty += "|";
+            
+            temp = ItemTotalPrice.length();
+            for (int j = 0; j < itemTotalPrice_MaxLen - temp; j++) {
+                ItemTotalPrice+=" ";
+            }
+            ItemTotalPrice += "|";
+            
+            temp = ItemNameStringBreak.length();
+            for (int j = 0; j < itemName_MaxLen - temp; j++) {
+                ItemNameStringBreak+=" ";
+            }
+            ItemNameStringBreak += "|";
+            
+            rowData[i] = sno + ItemName + ItemPrice + ItemQty + ItemTotalPrice;
+            System.out.println(rowData[i] + "\n" + "    |" + ItemNameStringBreak + "      |    |      |");
+        }
+        /*
+            Size 1 characters per line limit: 48.
+            Size 2 characters per line limit: 24.
+            Size 3 characters per line limit: 16.
+            Size 4 characters per line limit: 12.
+        */
+
+        /*
+            Total characters in line: 48
+            S. no max: 4
+            Sub Total max: 6
+            Qty max: 4
+            Total Amount max: 6
+            Total separators: 4
+            Remaining length for item name: 48 - 4 - 6 - 4 - 6 - 4 = 24
+        */
 //        String TimeDate_PTypeToken = "\n" + TimeDateString + "\n" + "________________________\n\n" + PatientType + " TOKEN NUMBER\n";
         String HorizontalLine = "________________________\n\n";
         String Footer = "\n\n\n\n\n\nSOFTWARE DEVELOPED BY KHIZIR FARRUKH\nEMAIL: khizirfarrukh@outlook.com\n\n\n\n\n";
@@ -625,10 +702,10 @@ public class ProgramGUI extends javax.swing.JFrame {
         if(!checkIfEmpty(CompanyPhoneNum)) { FullString += CompanyPhoneNum + "\n"; }
         if(!checkIfEmpty(CompanyEmailAddr)) { FullString += CompanyEmailAddr + "\n"; }
         if(!checkIfEmpty(CashierName)) { FullString += "Cashier: " + CashierName + "\n"; }
-        FullString += fSize1Str + TimeDateString + "\n" + HorizontalLine;
+//        FullString += fSize1Str + TimeDateString + "\n" + HorizontalLine;
         
         
-        printerService.printString("BCPrinter", FullString);
+//        printerService.printString("BCPrinter", FullString);
     }
     void WriteDataToFile() {
         
