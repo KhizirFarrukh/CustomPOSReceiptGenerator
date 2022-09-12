@@ -694,6 +694,34 @@ public class ProgramGUI extends javax.swing.JFrame {
             }
             System.out.println(rowData[i]);
         }
+        
+        String currencyStr = "Rs. ";
+        
+        String SubTotalLine = "Sub Total";
+        int subTotalSpacePadding = 48 - SubTotalLine.length() - currencyStr.length() - SubTotal.length();
+        for (int i = 0; i < subTotalSpacePadding; i++) {
+            SubTotalLine += " ";
+        }
+        SubTotalLine += currencyStr + SubTotal;
+        
+        String TaxAmount = String.valueOf(Integer.parseInt(TotalAmount) - Integer.parseInt(SubTotal));
+        String TaxLine = "Tax (" + Tax + "%)";
+        int TaxSpacePadding = 48 - TaxLine.length() - currencyStr.length() - TaxAmount.length();
+        for (int i = 0; i < TaxSpacePadding; i++) {
+            TaxLine += " ";
+        }
+        TaxLine += currencyStr + TaxAmount;
+        
+        String TotalAmountLine = "Total Amount";
+        int TotalSpacePadding = 48 - TotalAmountLine.length() - currencyStr.length() - TotalAmount.length();
+        for (int i = 0; i < TotalSpacePadding; i++) {
+            TotalAmountLine += " ";
+        }
+        TotalAmountLine += currencyStr + TotalAmount;
+        
+        System.out.println(SubTotalLine);
+        System.out.println(TaxLine);
+        System.out.println(TotalAmountLine);
         /*
             Size 1 characters per line limit: 48.
             Size 2 characters per line limit: 24.
