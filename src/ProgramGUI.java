@@ -620,7 +620,8 @@ public class ProgramGUI extends javax.swing.JFrame {
         String TotalAmount = ReceiptTotalAmtField.getText();
         
         String[] rowData = new String[CartItemListTable.getRowCount()];
-        for (int i = 0; i < CartItemListTable.getRowCount(); i++) {
+        int itemRows = CartItemListTable.getRowCount();
+        for (int i = 0; i < itemRows; i++) {
             String sno = String.valueOf((Integer)CartItemListTable.getValueAt(i, 0));
             String ItemName = (String)CartItemListTable.getValueAt(i, 1);
             String ItemPrice = String.valueOf((Integer)CartItemListTable.getValueAt(i, 2));
@@ -676,14 +677,14 @@ public class ProgramGUI extends javax.swing.JFrame {
             for (int j = 0; j < itemTotalPrice_MaxLen - temp; j++) {
                 ItemTotalPrice+=" ";
             }
-            ItemTotalPrice += "|";
+//            ItemTotalPrice += "|";
             
             for (int y = 0; y < StringBreakLines; y++) {
                 temp = ItemNameStringBreak[y].length();
                 for (int j = 0; j < itemName_MaxLen - temp; j++) {
                     ItemNameStringBreak[y]+=" ";
                 }
-                ItemNameStringBreak[y] = "    |" + ItemNameStringBreak[y] + "|      |    |      |";
+                ItemNameStringBreak[y] = "    |" + ItemNameStringBreak[y] + "|      |    |      ";
             }
             
             
@@ -692,7 +693,6 @@ public class ProgramGUI extends javax.swing.JFrame {
                 rowData[i] += "\n" + ItemNameStringBreak[y];
 //                System.out.println(ItemNameStringBreak[y]);
             }
-            System.out.println(rowData[i]);
         }
         
         String currencyStr = "Rs. ";
@@ -739,14 +739,21 @@ public class ProgramGUI extends javax.swing.JFrame {
             Remaining length for item name: 48 - 4 - 6 - 4 - 6 - 4 = 24
         */
 //        String TimeDate_PTypeToken = "\n" + TimeDateString + "\n" + "________________________\n\n" + PatientType + " TOKEN NUMBER\n";
-        String HorizontalLine = "________________________\n\n";
+        String HorizontalLine = "------------------------------------------------\n";
         String Footer = "\n\n\n\n\n\nSOFTWARE DEVELOPED BY KHIZIR FARRUKH\nEMAIL: khizirfarrukh@outlook.com\n\n\n\n\n";
-        String FullString = justify1Str + fSize3Str + CompanyName + "\n" + fSize2Str; // +  + TimeDateString + HorizontalLine + fSize4Str + TokenNumber + fSize5Str + Footer + cutPStr;
-        if(!checkIfEmpty(CompanyAddress)) { FullString += CompanyAddress + "\n"; }
-        if(!checkIfEmpty(CompanyPhoneNum)) { FullString += CompanyPhoneNum + "\n"; }
-        if(!checkIfEmpty(CompanyEmailAddr)) { FullString += CompanyEmailAddr + "\n"; }
+        String FullString = justify1Str + fSize3Str + CompanyName + "\n" + fSize1Str; // +  + TimeDateString + HorizontalLine + fSize4Str + TokenNumber + fSize5Str + Footer + cutPStr;
+        if(!checkIfEmpty(CompanyAddress)) { FullString += "Address: " + CompanyAddress + "\n"; }
+        if(!checkIfEmpty(CompanyPhoneNum)) { FullString += "Phone Number: " + CompanyPhoneNum + "\n"; }
+        if(!checkIfEmpty(CompanyEmailAddr)) { FullString += "Email Address: " + CompanyEmailAddr + "\n"; }
+        FullString += HorizontalLine + TimeDateString + "\n";
+        if(!checkIfEmpty(ReceiptNo)) { FullString += "Receipt No: " + ReceiptNo + "\n"; }
         if(!checkIfEmpty(CashierName)) { FullString += "Cashier: " + CashierName + "\n"; }
-//        FullString += fSize1Str + TimeDateString + "\n" + HorizontalLine;
+        FullString += HorizontalLine + "S.no|Item Name               |Price |Qty |Total\n" + HorizontalLine;
+        for (int i = 0; i < itemRows; i++) {
+            FullString += rowData[i] + "\n";
+        }
+        FullString += HorizontalLine + SubTotalLine + "\n" + TaxLine + "\n" + TotalAmountLine + "\n\n\n\n\n";
+        System.out.println(FullString);
         
         
 //        printerService.printString("BCPrinter", FullString);
