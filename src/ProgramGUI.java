@@ -23,6 +23,7 @@ public class ProgramGUI extends javax.swing.JFrame {
      */
     public ProgramGUI() {
         initComponents();
+        SaveDataCheckbox.setSelected(true);
         printerService = new PrinterService();
     }
 
@@ -641,7 +642,7 @@ public class ProgramGUI extends javax.swing.JFrame {
             sno += "|";
             
             temp = ItemName.length();
-            int StringBreakLines = temp / 23;
+            int StringBreakLines = temp / 24;
             String[] ItemNameStringBreak = new String[StringBreakLines];
             for (int x = 23, y = 0; x < temp; x+=23, y++) {
                 int EndIndex = 23;
