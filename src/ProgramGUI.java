@@ -742,7 +742,11 @@ public class ProgramGUI extends javax.swing.JFrame {
 //        String TimeDate_PTypeToken = "\n" + TimeDateString + "\n" + "________________________\n\n" + PatientType + " TOKEN NUMBER\n";
         String HorizontalLine = "------------------------------------------------\n";
         String Footer = "\n\n\n\n\n\nSOFTWARE DEVELOPED BY KHIZIR FARRUKH\nEMAIL: khizirfarrukh@outlook.com\n\n\n\n\n";
-        String FullString = justify1Str + fSize3Str + CompanyName + "\n" + fSize1Str; // +  + TimeDateString + HorizontalLine + fSize4Str + TokenNumber + fSize5Str + Footer + cutPStr;
+        String FullString = justify1Str;// + fSize3Str + CompanyName + "\n" + fSize1Str; // +  + TimeDateString + HorizontalLine + fSize4Str + TokenNumber + fSize5Str + Footer + cutPStr;
+        if(CompanyName.length() <= 16) { FullString += fSize3Str; }
+        else if(CompanyName.length() <= 24) { FullString += fSize2Str; }
+        else { FullString += fSize1Str; }
+        FullString += CompanyName + "\n" + fSize1Str;
         if(!checkIfEmpty(CompanyAddress)) { FullString += "Address: " + CompanyAddress + "\n"; }
         if(!checkIfEmpty(CompanyPhoneNum)) { FullString += "Phone Number: " + CompanyPhoneNum + "\n"; }
         if(!checkIfEmpty(CompanyEmailAddr)) { FullString += "Email Address: " + CompanyEmailAddr + "\n"; }
@@ -753,7 +757,7 @@ public class ProgramGUI extends javax.swing.JFrame {
         for (int i = 0; i < itemRows; i++) {
             FullString += rowData[i] + "\n";
         }
-        FullString += HorizontalLine + SubTotalLine + "\n" + TaxLine + "\n" + TotalAmountLine + "\n\n\n\n\n";
+        FullString += HorizontalLine + SubTotalLine + "\n" + TaxLine + "\n" + TotalAmountLine + "\n\n\n\n\n" + cutPStr;
         System.out.println(FullString);
         
         
